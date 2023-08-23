@@ -49,4 +49,4 @@ _Билет_  QR-код c уникальным кодом бронировани
 - VSCode
 - GIT
 
-Ссылка на GitHubPage:
+Ссылка на GitHub Pages: https://oksik5.github.io/js-cp-diploma-cinema/
