@@ -1,3 +1,5 @@
+localStorage.clear();
+
 const listDayWeek = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 const dayNumber = document.querySelectorAll('.page-nav__day-number');
 const dayWeek = document.querySelectorAll('.page-nav__day-week');
@@ -101,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			movieSeance.addEventListener('click', (event) => {
 				const selectSeance = event.target.dataset;
 				selectSeance.hallConfig = object.halls.find(hall => hall.hall_id == selectSeance.hallId).hall_config;
-				sessionStorage.setItem('selectSeance', JSON.stringify(selectSeance));
+				localStorage.setItem('selectSeance', JSON.stringify(selectSeance));
 			});
 
 		});
