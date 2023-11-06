@@ -1,5 +1,6 @@
+
 document.addEventListener('DOMContentLoaded', () => {
-	const selectSeance = JSON.parse(sessionStorage.selectSeance);
+	const selectSeance = JSON.parse(localStorage.selectSeance);
 
 	const buyingInfoTitle = document.querySelector('.buying__info-title');
 	const buyingInfoStart = document.querySelector('.buying__info-start');
@@ -37,22 +38,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const request = `event=get_hallConfig&timestamp=${selectSeance.seanceTimeStamp}&hallId=${selectSeance.hallId}&seanceId=${selectSeance.seanceId}`;
 
-	createRequest(request, (resp) => {
-		if (resp) {
-			selectSeance.hallConfig = resp;
-		}
+	createRequest(request, (response) => {
+		console.log(response);
+		if (response === null) {
 		stepWrapper.innerHTML = selectSeance.hallConfig;
-		const chairs = [...document.querySelectorAll('.conf-step__row .conf-step__chair')];
-		acceptinBtn.setAttribute('disabled', true);
+		} else {
+    	stepWrapper.innerHTML = response;
+		}
 
+		const chairs = [...document.querySelectorAll('.conf-step__row .conf-step__chair')];
+		let chairsSelected = [...document.querySelectorAll('.conf-step__row .conf-step__chair_selected')];
+		if (chairsSelected.length) {
+			acceptinBtn.removeAttribute('disabled');
+		} else {
+			acceptinBtn.setAttribute('disabled', true);
+		}
 		chairs.forEach((chair) => {
 			chair.addEventListener('click', (event) => {
 				if (event.target.classList.contains('conf-step__chair_taken')) {
 					return;
 				}
 				event.target.classList.toggle('conf-step__chair_selected');
-				const chairSelected = [...document.querySelectorAll('.conf-step__row .conf-step__chair_selected')];
-				if (chairSelected.length > 0) {
+				chairsSelected = [...document.querySelectorAll('.conf-step__row .conf-step__chair_selected')];
+				if (chairsSelected.length) {
 					acceptinBtn.removeAttribute('disabled');
 				} else {
 					acceptinBtn.setAttribute('disabled', true);
@@ -60,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 		});
 	});
-
 
 	acceptinBtn.addEventListener('click', (event) => {
 		event.preventDefault();
@@ -82,8 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		const configHall = stepWrapper.innerHTML;
 		selectSeance.hallConfig = configHall;
 		selectSeance.salesPlaces = selectedPlaces;
-		sessionStorage.clear();
-		sessionStorage.setItem('selectSeance', JSON.stringify(selectSeance));
+		localStorage.clear();
+		localStorage.setItem('selectSeance', JSON.stringify(selectSeance));
 		window.location.href = 'payment.html';
 	});
 });
