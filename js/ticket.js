@@ -1,4 +1,4 @@
-const selectSeance = JSON.parse(sessionStorage.selectSeance);
+const selectSeance = JSON.parse(localStorage.selectSeance);
 
 document.addEventListener('DOMContentLoaded', () => {
 	
