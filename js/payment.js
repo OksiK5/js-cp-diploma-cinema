@@ -1,20 +1,9 @@
-const selectSeance = JSON.parse(sessionStorage.selectSeance);
+const selectSeance = JSON.parse(localStorage.selectSeance);
 
 let places = selectSeance.salesPlaces.map(salePlace => `${salePlace.row}/${salePlace.place}`).join(', ');
 let price = selectSeance.salesPlaces.reduce((total, salePlace) => {
 	return total + (salePlace.type === 'standart' ? Number(selectSeance.priceStandart) : Number(selectSeance.priceVip));
 }, 0);
-
-const numberDay = document.querySelectorAll('.ticket__date');
-let nowDay = new Date().setHours(0, 0, 0);
-numberDay.forEach((dayNumber, index) => {
-	let day = new Date(nowDay + (index * 24 * 60 * 60 * 1000));
-	dayNumber.innerHTML = day.toLocaleDateString('ru-RU', {
-		day: '2-digit',
-		month: '2-digit',
-		year: 'numeric'
-	}) + '.';
-});
 
 document.querySelector('.ticket__title').innerHTML = selectSeance.filmName;
 document.querySelector('.ticket__hall').innerHTML = selectSeance.hallName;
