@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	createRequest(request, (response) => {
 		console.log(response);
 		if (response === null) {
-		stepWrapper.innerHTML = selectSeance.hallConfig;
+			stepWrapper.innerHTML = selectSeance.hallConfig;
 		} else {
-    	stepWrapper.innerHTML = response;
+    		stepWrapper.innerHTML = response;
 		}
 
 		const chairs = [...document.querySelectorAll('.conf-step__row .conf-step__chair')];
